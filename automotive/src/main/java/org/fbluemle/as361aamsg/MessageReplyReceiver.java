@@ -20,14 +20,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.core.app.RemoteInput;
 import android.util.Log;
+
+import androidx.core.app.RemoteInput;
 
 /**
  * A receiver that gets called when a reply is sent to a given conversationId
  */
 public class MessageReplyReceiver extends BroadcastReceiver {
-
     private static final String TAG = MessageReplyReceiver.class.getSimpleName();
 
     @Override

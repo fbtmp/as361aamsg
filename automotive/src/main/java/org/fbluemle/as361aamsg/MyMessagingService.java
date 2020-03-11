@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationCompat.CarExtender;
 import androidx.core.app.NotificationCompat.CarExtender.UnreadConversation;
@@ -30,29 +31,15 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.RemoteInput;
 
 public class MyMessagingService extends Service {
-    private static final String TAG = MyMessagingService.class.getSimpleName();
-
     public static final String READ_ACTION =
             "org.fbluemle.as361aamsg.ACTION_MESSAGE_READ";
     public static final String REPLY_ACTION =
             "org.fbluemle.as361aamsg.ACTION_MESSAGE_REPLY";
     public static final String CONVERSATION_ID = "conversation_id";
     public static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
-
-    private NotificationManagerCompat mNotificationManager;
-
+    private static final String TAG = MyMessagingService.class.getSimpleName();
     private final Messenger mMessenger = new Messenger(new IncomingHandler());
-
-    /**
-     * Handler of incoming messages from clients.
-     */
-    class IncomingHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            sendNotification(1, "This is a sample message", "John Doe",
-                    System.currentTimeMillis());
-        }
-    }
+    private NotificationManagerCompat mNotificationManager;
 
     @Override
     public void onCreate() {
@@ -99,9 +86,9 @@ public class MyMessagingService extends Service {
         // read and reply intents.
         UnreadConversation.Builder unreadConvBuilder =
                 new UnreadConversation.Builder(participant)
-                .setLatestTimestamp(timestamp)
-                .setReadPendingIntent(readPendingIntent)
-                .setReplyAction(replyIntent, remoteInput);
+                        .setLatestTimestamp(timestamp)
+                        .setReadPendingIntent(readPendingIntent)
+                        .setReplyAction(replyIntent, remoteInput);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
                 // Set the application notification icon:
@@ -118,5 +105,16 @@ public class MyMessagingService extends Service {
                         .setUnreadConversation(unreadConvBuilder.build()));
 
         mNotificationManager.notify(conversationId, builder.build());
+    }
+
+    /**
+     * Handler of incoming messages from clients.
+     */
+    class IncomingHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            sendNotification(1, "This is a sample message", "John Doe",
+                    System.currentTimeMillis());
+        }
     }
 }
