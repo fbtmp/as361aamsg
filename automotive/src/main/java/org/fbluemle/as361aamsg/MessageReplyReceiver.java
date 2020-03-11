@@ -40,9 +40,8 @@ public class MessageReplyReceiver extends BroadcastReceiver {
     }
 
     /**
-     * Get the message text from the intent.
-     * Note that you should call {@code RemoteInput#getResultsFromIntent(intent)} to process
-     * the RemoteInput.
+     * Get the message text from the intent. Note that you should call {@code
+     * RemoteInput#getResultsFromIntent(intent)} to process the RemoteInput.
      */
     private CharSequence getMessageText(Intent intent) {
         Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);

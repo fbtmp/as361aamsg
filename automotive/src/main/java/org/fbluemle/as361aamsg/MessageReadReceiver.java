@@ -32,7 +32,8 @@ public class MessageReadReceiver extends BroadcastReceiver {
             int conversationId = intent.getIntExtra(MyMessagingService.CONVERSATION_ID, -1);
             if (conversationId != -1) {
                 Log.d(TAG, "Conversation " + conversationId + " was read");
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+                NotificationManagerCompat notificationManager =
+                        NotificationManagerCompat.from(context);
                 notificationManager.cancel(conversationId);
             }
         }

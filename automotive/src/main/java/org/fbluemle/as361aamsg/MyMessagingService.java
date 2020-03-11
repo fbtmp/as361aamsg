@@ -31,10 +31,8 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.RemoteInput;
 
 public class MyMessagingService extends Service {
-    public static final String READ_ACTION =
-            "org.fbluemle.as361aamsg.ACTION_MESSAGE_READ";
-    public static final String REPLY_ACTION =
-            "org.fbluemle.as361aamsg.ACTION_MESSAGE_REPLY";
+    public static final String READ_ACTION = "org.fbluemle.as361aamsg.ACTION_MESSAGE_READ";
+    public static final String REPLY_ACTION = "org.fbluemle.as361aamsg.ACTION_MESSAGE_REPLY";
     public static final String CONVERSATION_ID = "conversation_id";
     public static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
     private static final String TAG = MyMessagingService.class.getSimpleName();
@@ -63,24 +61,27 @@ public class MyMessagingService extends Service {
                 .putExtra(CONVERSATION_ID, conversationId);
     }
 
-    private void sendNotification(int conversationId, String message,
-                                  String participant, long timestamp) {
+    private void sendNotification(
+            int conversationId, String message, String participant, long timestamp) {
         // A pending Intent for reads
-        PendingIntent readPendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                conversationId,
-                createIntent(conversationId, READ_ACTION),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent readPendingIntent =
+                PendingIntent.getBroadcast(
+                        getApplicationContext(),
+                        conversationId,
+                        createIntent(conversationId, READ_ACTION),
+                        PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Build a RemoteInput for receiving voice input in a Car Notification
-        RemoteInput remoteInput = new RemoteInput.Builder(EXTRA_VOICE_REPLY)
-                .setLabel("Reply by voice")
-                .build();
+        RemoteInput remoteInput =
+                new RemoteInput.Builder(EXTRA_VOICE_REPLY).setLabel("Reply by voice").build();
 
         // Building a Pending Intent for the reply action to trigger
-        PendingIntent replyIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                conversationId,
-                createIntent(conversationId, REPLY_ACTION),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent replyIntent =
+                PendingIntent.getBroadcast(
+                        getApplicationContext(),
+                        conversationId,
+                        createIntent(conversationId, REPLY_ACTION),
+                        PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Create the UnreadConversation and populate it with the participant name,
         // read and reply intents.
@@ -90,19 +91,20 @@ public class MyMessagingService extends Service {
                         .setReadPendingIntent(readPendingIntent)
                         .setReplyAction(replyIntent, remoteInput);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                // Set the application notification icon:
-                //.setSmallIcon(R.drawable.notification_icon)
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(getApplicationContext())
+                        // Set the application notification icon:
+                        // .setSmallIcon(R.drawable.notification_icon)
 
-                // Set the large icon, for example a picture of the other recipient of the message
-                //.setLargeIcon(personBitmap)
+                        // Set the large icon, for example a picture of the other recipient of the
+                        // message
+                        // .setLargeIcon(personBitmap)
 
-                .setContentText(message)
-                .setWhen(timestamp)
-                .setContentTitle(participant)
-                .setContentIntent(readPendingIntent)
-                .extend(new CarExtender()
-                        .setUnreadConversation(unreadConvBuilder.build()));
+                        .setContentText(message)
+                        .setWhen(timestamp)
+                        .setContentTitle(participant)
+                        .setContentIntent(readPendingIntent)
+                        .extend(new CarExtender().setUnreadConversation(unreadConvBuilder.build()));
 
         mNotificationManager.notify(conversationId, builder.build());
     }
@@ -113,8 +115,7 @@ public class MyMessagingService extends Service {
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            sendNotification(1, "This is a sample message", "John Doe",
-                    System.currentTimeMillis());
+            sendNotification(1, "This is a sample message", "John Doe", System.currentTimeMillis());
         }
     }
 }
