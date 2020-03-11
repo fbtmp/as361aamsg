@@ -28,7 +28,7 @@ import androidx.core.app.RemoteInput;
  * A receiver that gets called when a reply is sent to a given conversationId
  */
 public class MessageReplyReceiver extends BroadcastReceiver {
-    private static final String TAG = MessageReplyReceiver.class.getSimpleName();
+    private static final String TAG = "MessageReplyReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {

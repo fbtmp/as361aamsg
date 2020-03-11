@@ -24,7 +24,7 @@ import android.util.Log;
 import androidx.core.app.NotificationManagerCompat;
 
 public class MessageReadReceiver extends BroadcastReceiver {
-    private static final String TAG = MessageReadReceiver.class.getSimpleName();
+    private static final String TAG = "MessageReadReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
