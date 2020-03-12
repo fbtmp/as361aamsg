@@ -16,6 +16,7 @@
 
 package org.fbluemle.as361aamsg;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -112,6 +113,7 @@ public class MyMessagingService extends Service {
     /**
      * Handler of incoming messages from clients.
      */
+    @SuppressLint("HandlerLeak")
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
